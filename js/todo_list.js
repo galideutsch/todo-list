@@ -1,78 +1,57 @@
-// class ListItem extends React.Componenet {
-//     constructor() {
-//         super();
-//     }
-//     render() {
-//         return (
-//         );
-//     }
-// }
-
-class Done extends React.Componenet {
-    constructor() {
-        super();
-    }
-    render() {
-        return (
-            <div className="done-container">
-                {itemsDone}
+class App extends React.Component{
+    render(){
+        return(
+            <div className="container">
+                {/* <Header/> */}
+                <Content/>
             </div>
         );
     }
 }
 
-class Todo extends React.Componenet {
-    constructor() {
-        super();
+class Content extends React.Component{
+    constructor(props){
+        super(props);
         this.state = {
-            tasksDone: []
+              
         }
     }
-    render() {
-        return (
-            <div className="todo-container">
-                {itemsTodo}
-                <Done />
+    render(){
+        return(
+            <div className="container">
+                <TaskList taskType="todo" text="ToDo"/>
+                <TaskList taskType="done" text="Done"/>
+                <button>Add</button>
             </div>
         );
     }
 }
 
-class App extends React.Componenet {
-    constructor() {
-        super();
-        this.state = {
-            tasksTodo: []
-        }
-        this.addTask = this.addTask.bind(this)
-        this.showPopup = this.showPopup.bind(this)
-    }
-
-    addTask() {
-        var newTask;
-        newTask = this.showPopup(); // TO DO will return the input text
-        setState({
-            tasksTodo: this.state.tasks.push(newTask)
-        })
-    }
-    render() {
-        return (
-            <div className="app-container">
-                <Todo />
-                <button type="submit" onClick={this.addTask} >Submit</button>
+class TaskList extends React.Component{
+    render(){
+        return(
+            <div className={`row ${this.props.taskType}`}>
+                {this.props.text}
+                <ul className={`column ${this.props.taskType}`}>
+                    <Task/>
+                </ul>
             </div>
-
         );
     }
 }
 
-
-function render() {
-    ReactDOM.render(
-        <App />,
-        document.getElementById("root")
-    );
+class Task extends React.Component{
+    render(){
+        return(
+            <li>
+                <input type="checkbox"/>
+                <input type="text"/>
+            </li>
+        );
+    }
 }
-render();
-        // var newTask = new Array(this.state.tasksTodo).fill(0);
-        // newTask = boxes.map(x => <Box size={this.state.boxSize}/>)
+
+ReactDOM.render(
+    <App />,
+    document.getElementById("root")
+);
