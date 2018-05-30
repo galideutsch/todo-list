@@ -20,7 +20,7 @@ class Content extends React.Component{
     }
 
     addTask(){
-        this.state.tasks.push(<Task text={this.state.task} numOfTasks={this.state.numOfTasks} handleBlur={this.updateTask}/>);
+        this.state.tasks.push(<Task text={this.state.task} numOfTasks={this.state.numOfTasks+1} handleBlur={this.updateTask}/>);
         this.setState({
             numOfTasks: this.state.numOfTasks + 1,
             tasks: this.state.tasks
