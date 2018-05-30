@@ -18,9 +18,8 @@ class Content extends React.Component{
         }
         this.addTask = this.addTask.bind(this);
     }
-
     addTask(){
-        this.state.tasks.push(<Task text={this.state.task} numOfTasks={this.state.numOfTasks+1} handleBlur={this.updateTask}/>);
+        this.state.tasks.push(<Task numOfTasks={this.state.numOfTasks+1}/>);
         this.setState({
             numOfTasks: this.state.numOfTasks + 1,
             tasks: this.state.tasks
@@ -40,15 +39,7 @@ class Content extends React.Component{
 class TaskList extends React.Component{
     constructor(props){
         super(props);
-        this.state = {
-            task: ""
-        }
-    }
-    updateTask(){
-        this.setState({
-            task: event.target.value
-        })
-    }  
+    } 
     render(){
         return(
             <div className={`row ${this.props.taskType}`}>
@@ -64,13 +55,22 @@ class TaskList extends React.Component{
 class Task extends React.Component{
     constructor(props){
         super(props);
+        this.state = {
+            task: ""
+        }
+        this.updateTask = this.updateTask.bind(this);
     }
+    updateTask(){
+        this.setState({
+            task: event.target.value
+        })
+    } 
     render(){
         return(
-            <li id={`task${this.props.numOfTasks}`} class={`checkbox`}>
+            <li id={`task${this.props.numOfTasks}`} class="checkbox task" value={this.state.task}>
                 <label>
                     <input type="checkbox"/>
-                    <input type="text" onBlur={this.props.handleBlur}>{this.props.text}</input>
+                    <input type="text" onBlur={this.updateTask}/>
                 </label>
             </li>
         );
