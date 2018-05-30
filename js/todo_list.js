@@ -20,7 +20,7 @@ class Content extends React.Component{
     }
 
     addTask(){
-        this.state.tasks.push(<Task text={this.state.task} idNum={this.props.taskNum} handleBlur={this.updateTask}/>);
+        this.state.tasks.push(<Task text={this.state.task} numOfTasks={this.state.numOfTasks} handleBlur={this.updateTask}/>);
         this.setState({
             numOfTasks: this.state.numOfTasks + 1,
             tasks: this.state.tasks
@@ -29,7 +29,7 @@ class Content extends React.Component{
     render(){
         return(
             <div className="container">
-                <TaskList newTaskList={this.state.tasks} numOfTasks={this.state.numOfTasks} taskType="todo" text="ToDo"/>
+                <TaskList newTaskList={this.state.tasks} taskType="todo" text="ToDo"/>
                 <TaskList taskType="done" text="Done"/>
                 <button onClick={this.addTask}>Add</button>
             </div>
@@ -67,7 +67,7 @@ class Task extends React.Component{
     }
     render(){
         return(
-            <li id={`task${this.props.idNum}`} class={`checkbox`}>
+            <li id={`task${this.props.numOfTasks}`} class={`checkbox`}>
                 <label>
                     <input type="checkbox"/>
                     <input type="text" onBlur={this.props.handleBlur}>{this.props.text}</input>
