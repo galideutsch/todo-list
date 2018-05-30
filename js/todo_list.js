@@ -2,7 +2,7 @@ class App extends React.Component{
     render(){
         return(
             <div>
-                {/* <Header/> */}
+                {/* Header */}
                 <Content/>
             </div>
         );
@@ -13,31 +13,23 @@ class Content extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            number: 0, 
-            task: "",
+            numOfTasks: 0, 
             tasks: []
         }
         this.addTask = this.addTask.bind(this);
     }
 
     addTask(){
-        this.newTaskList = [];
-        var newTask = <Task idNum={this.props.taskId} handleBlur={this.updateTask}/>;
-        for(var i = 0; i < this.state.tasks.length; i++){
-            this.newTaskList.push(newTask);
-        }
+        this.state.tasks.push(<Task text={this.state.task} idNum={this.props.taskNum} handleBlur={this.updateTask}/>);
         this.setState({
-            tasks: this.newTaskList, 
-            number: this.state.number + 1
+            numOfTasks: this.state.numOfTasks + 1,
+            tasks: this.state.tasks
         });
-    }
-    updateTask(){
-
-    }
+    } 
     render(){
         return(
             <div className="container">
-                <TaskList newTaskList={this.newTaskList} taskId={this.state.number} taskType="todo" text="ToDo"/>
+                <TaskList newTaskList={this.state.tasks} numOfTasks={this.state.numOfTasks} taskType="todo" text="ToDo"/>
                 <TaskList taskType="done" text="Done"/>
                 <button onClick={this.addTask}>Add</button>
             </div>
@@ -48,7 +40,15 @@ class Content extends React.Component{
 class TaskList extends React.Component{
     constructor(props){
         super(props);
+        this.state = {
+            task: ""
+        }
     }
+    updateTask(){
+        this.setState({
+            task: event.target.value
+        })
+    }  
     render(){
         return(
             <div className={`row ${this.props.taskType}`}>
@@ -68,8 +68,10 @@ class Task extends React.Component{
     render(){
         return(
             <li id={`task${this.props.idNum}`} class={`checkbox`}>
-                <input type="checkbox"/>
-                <input type="text" onBlur={this.props.handleBlur}/>
+                <label>
+                    <input type="checkbox"/>
+                    <input type="text" onBlur={this.props.handleBlur}>{this.props.text}</input>
+                </label>
             </li>
         );
     }
