@@ -1,3 +1,38 @@
+body {
+    background: #355C7D;
+    background: linear-gradient(rgb(212, 152, 129), rgb(182, 84, 94), rgb(136, 74, 92), #6C5B7B, #355C7D);
+    color: white;
+}
+
+.header {
+    text-align: center;
+    padding: 12%;
+    background: #F8B195;
+}
+
+.todo {
+    background: #F67280;
+    padding: 0 5%;
+}
+
+.done {
+    background: #C06C84;
+    padding: 0 5%;
+}
+
+.subtitle {
+    font-family: 'Satisfy', cursive;
+}
+
+.button {
+
+}
+
 ul {
     list-style-type: none;
+}
+
+input {
+    background: none;
+    border: none;
 }
