@@ -16,7 +16,8 @@ class App extends React.Component {
         });
     }
     addContent(content) {
-        this.state.tasksToDo.push(content);
+        // this.state.tasksToDo.push(content);
+        this.state.tasksToDo[this.state.tasksToDo.length-1] = content;
         this.setState({
             tasksToDo: this.state.tasksToDo
         });
@@ -35,7 +36,8 @@ class App extends React.Component {
                  <TaskList handleBlur={this.addContent} amount={this.state.count} taskType="todo"
                  text="ToDo"  completed={this.state.tasksDone} pending={this.state.tasksToDo} updateList ={this.updateList}/>
                 {/* } */}
-                <TaskList completed={this.state.tasksDone} pending={this.state.tasksToDo} taskType="done" text="Done" />
+                <TaskList  handleBlur={this.addContent} amount={this.state.count} taskType="done" 
+                 text="Done" completed={this.state.tasksDone} pending={this.state.tasksToDo} updateList ={this.updateList} />
                 <button onClick={this.addTask}>Add</button>
             </div>
         );
@@ -46,17 +48,17 @@ class TaskList extends React.Component {
     constructor(props) {
         super(props);
         this.moveTask = this.moveTask.bind(this);
+        this.convertTask = this.convertTask.bind(this);
     }
     moveTask(event) {
         // var newTaskList=[];
         var pending = this.props.pending;
         var completed = this.props.completed;
         var index;
-        debugger;
-        // for (var i = 0; i < newTaskList.length; i++){
+                // for (var i = 0; i < newTaskList.length; i++){
         // for (var i = 0; i < pending.length; i++) {
             if(event.target.checked){
-                completed.push(event.target.value);
+                completed.push(event.target.value);/////////////
                 index = pending.indexOf(event.target.value);
                 pending.splice(index,1);
             } else{
@@ -73,21 +75,30 @@ class TaskList extends React.Component {
         // }
         this.props.updateList(completed, pending);
     }
-    render() {
-        var pending = this.props.pending;
-        var completed = this.props.compleated;
-        var tasks = [];
-        debugger; //taskes[i].value
-        for (var i = 0; i < this.props.amount; i++) {
-            // tasks.push(<Task handleBlur={this.props.handleBlur} moveTask={this.moveTask} />);
-            tasks.push(<Task handleBlur={this.props.handleBlur} moveTask={this.moveTask} />);
+    convertTask(arr, status){
+        var newArr = []
+        for( var taskIndex in arr){
+                newArr.push(<Task status={status} handleBlur={this.props.handleBlur} moveTask={this.moveTask} value={arr[taskIndex]} />);
         }
+        return newArr;;
+    }
+    render() {
+        var pending = this.convertTask(this.props.pending, "pending");
+        var completed = this.convertTask(this.props.completed, "completed");
+        var tasks = [];
+        for (var i = 0; i < this.props.amount - completed.length; i++) {
+            debugger;
+            // tasks.push(<Task handleBlur={this.props.handleBlur} moveTask={this.moveTask} />);
+            // if(this.props.status == "pending"){}
+            pending.push(<Task handleBlur={this.props.handleBlur} moveTask={this.moveTask} />);
+        }
+
         return (
             <div className={`row ${this.props.taskType}`}>
                 {this.props.text}
                 <ul className={`col-lg-12 col-xs-12 ${this.props.taskType}`}>
                     {/* {this.props.taskType === "todo" ? tasks : this.props.newTaskList} */}
-                    {this.props.taskType === "todo" ? tasks : completed}
+                    {this.props.taskType === "todo" ? pending : completed}
                 </ul>
             </div>
         );
@@ -103,23 +114,24 @@ class Task extends React.Component {
         this.updateTask = this.updateTask.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
-    updateTask() {
-        this.state.task = event.target.value
+    updateTask(event) {
+        // this.state.task = event.target.value
         this.setState({
-            task: this.state.task
+            // task: this.state.task
+            task : event.target.value
         });
         this.props.handleBlur(this.state.task);
     }
     handleChange(event) {
         this.props.moveTask(event);
-        debugger;
+        
     }
     render() {
         return (
             <li class="checkbox task">
                 <label>
                     <input type="checkbox" value={this.state.task} onChange={this.handleChange} />
-                    <input type="text" onBlur={this.updateTask} />
+                    <input type="text" onBlur={this.updateTask} value={this.props.value} />
                 </label>
             </li>
         );
