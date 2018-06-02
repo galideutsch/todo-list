@@ -44,3 +44,16 @@ ul {
 .task, .input {
     margin-left: 5px;
 }
+
+.col-xs-12.todo {
+    background: rgb(240, 169, 176);
+}
+
+.col-xs-12.done {
+    background: rgb(228, 164, 182);;
+}
+
+::placeholder {
+    color: white;
+    opacity: 1;
+}

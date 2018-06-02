@@ -63,7 +63,7 @@ class TaskList extends React.Component{
         }
         return(
             <div className={`row ${this.props.taskType}`}>
-                {this.props.text}
+                <h4 className={this.props.taskType}>{this.props.text}</h4>
                 <ul className={`col-lg-12 col-xs-12 ${this.props.taskType}`}>
                     {this.tasks}
                 </ul>
