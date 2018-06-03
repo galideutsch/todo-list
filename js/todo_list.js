@@ -89,7 +89,7 @@ class Task extends React.Component {
         this.state = {
             task: this.props.val,
             isHidden: true,
-            isStarred: true
+            isStarred: false
         }
         this.updateTask = this.updateTask.bind(this);
         this.enableTextEdit = this.enableTextEdit.bind(this);
@@ -117,7 +117,7 @@ class Task extends React.Component {
         this.setState({
             isStarred: !this.state.isStarred
         });
-        this.state.isStarred ? event.target.src = "../images/goldstar-16.png" : event.target.src = "../images/star-16.png"
+        this.state.isStarred ? event.target.src = "../images/star-16.png" : event.target.src = "../images/goldstar-16.png" ;
         this.state.isStarred ? event.target.parentElement.parentElement.prepend(event.target.parentElement) : null;
     }
     render() {

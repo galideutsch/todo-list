@@ -31,6 +31,7 @@ body {
     box-shadow: inset 0px 7px 10px 0px rgb(133, 5, 23);
     background: #F67280;
     padding: 0 5%;
+    overflow: hidden;
 }
 
 .row.done {
@@ -39,6 +40,7 @@ body {
     -webkit-box-shadow: inset 0px 7px 10px 0px rgb(103, 22, 46);
     -moz-box-shadow: inset 0px 7px 10px 0px rgb(103, 22, 46);
     box-shadow: inset 0px 7px 10px 0px rgb(103, 22, 46);
+    overflow: hidden;
 }
 
 .subtitle {
@@ -68,7 +70,8 @@ body {
 ul {
     list-style-type: none;
     height: 25%;
-    overflow: scroll;
+    overflow-y: scroll;
+    box-sizing: content-box;
 }
 
 .input {
@@ -86,11 +89,11 @@ ul {
 }
 
 .col-xs-12.todo {
-    background: rgb(247, 175, 182);
+    background: rgb(245, 194, 199);
 }
 
 .col-xs-12.done {
-    background: rgb(228, 164, 182);
+    background: rgb(230, 186, 198);
     ;
 }
 
@@ -111,4 +114,5 @@ ul {
 .starred {
     margin-right: 5px;
     cursor: pointer;
+    filter: saturate(5);
 }
