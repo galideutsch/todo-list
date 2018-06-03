@@ -58,7 +58,8 @@ ul {
 }
 
 .task, .input {
-    margin: 0 10px;
+    margin: 0 5px;
+    padding: 0 5px;
 }
 
 .col-xs-12.todo {
