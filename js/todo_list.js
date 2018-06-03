@@ -1,14 +1,11 @@
-
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasksToDo: [],
-            tasksDone: [],
+            completed: [],
             count: 0
         }
         this.addTask = this.addTask.bind(this);
-        this.addContent = this.addContent.bind(this);
         this.updateList = this.updateList.bind(this);
     }
     addTask() {
@@ -16,29 +13,18 @@ class App extends React.Component {
             count: this.state.count + 1
         });
     }
-    addContent(content) {
-        // this.state.tasksToDo.push(content);
-        this.state.tasksToDo[this.state.tasksToDo.length-1] = content;
+    updateList(content) {
+        this.state.completed.push(<Task val={content} />);
         this.setState({
-            tasksToDo: this.state.tasksToDo
-        });
-    }
-    updateList(done, todo) {
-        this.setState({
-            tasksDone: done,
-            tasksToDo: todo
+            completed: this.state.completed
         });
     }
     render() {
         return (
             <div className="container">
                 <Header />
-                {/* for (index in this.state.done){ */}
-                 <TaskList handleBlur={this.addContent} amount={this.state.count} taskType="todo"
-                 text="ToDo"  completed={this.state.tasksDone} pending={this.state.tasksToDo} updateList ={this.updateList}/>
-                {/* } */}
-                <TaskList  handleBlur={this.addContent} amount={this.state.count} taskType="done" 
-                 text="Done" completed={this.state.tasksDone} pending={this.state.tasksToDo} updateList ={this.updateList} />
+                <TaskList handleCheck={this.updateList} completed={this.state.completed} amount={this.state.count} taskType="todo" text="ToDo" />
+                <TaskList completed={this.state.completed} taskType="done" text="Done" />
                 <button onClick={this.addTask}>Add</button>
             </div>
         );
@@ -48,93 +34,98 @@ class App extends React.Component {
 class TaskList extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isChecked: false
+        }
         this.moveTask = this.moveTask.bind(this);
-        this.convertTask = this.convertTask.bind(this);
     }
     moveTask(event) {
-        // var newTaskList=[];
-        var pending = this.props.pending;
-        var completed = this.props.completed;
-        var index;
-                // for (var i = 0; i < newTaskList.length; i++){
-        // for (var i = 0; i < pending.length; i++) {
-            if(event.target.checked){
-                completed.push(event.target.value);/////////////
-                index = pending.indexOf(event.target.value);
-                pending.splice(index,1);
-            } else{
-                pending.push(event.target.value);
-            }
-        //     if (event.target.checked && pending[i] === event.target.value) {
-        //         completed.push(<li>{event.target.value}</li>);
-        //     }
-        //     for (var j = 0; j < this.props.pending; j++) {
-        //         if (this.tasks.includes(event.target.value)) {
-        //             this.tasks.splice(this.tasks[j], 1);
-        //         }
-        //     }
+        var content = event.target.value;
+        this.setState({
+            isChecked: !this.state.isChecked
+        });
+        // this.state.isChecked ? null : this.props.handleCheck(content);
+        event.target.checked ? this.props.handleCheck(content) : null;
+        debugger;
+        //     index = this.tasks.indexOf(event.target.value);
+        //     this.tasks.splice(index,1);
         // }
-        this.props.updateList(completed, pending);
-    }
-    convertTask(arr, status){
-        var newArr = []
-        for( var taskIndex in arr){
-                newArr.push(<Task status={status} handleBlur={this.props.handleBlur} moveTask={this.moveTask} value={arr[taskIndex]} />);
-        }
-        return newArr;
+        // } else {
+        //     this.tasks.push(event.target.value);
+        // }
     }
     render() {
-        var pending = this.convertTask(this.props.pending, "pending");
-        var completed = this.convertTask(this.props.completed, "completed");
-        // var tasks = [];
-        for (var i = 0; i < this.props.amount - completed.length; i++) {
-            debugger;
-            console.log(i);
-            // tasks.push(<Task handleBlur={this.props.handleBlur} moveTask={this.moveTask} />);
-            // if(this.props.status == "pending"){}
-            pending.push(<Task handleBlur={this.props.handleBlur} moveTask={this.moveTask} />);
-        }
+        // if (this.props.taskType === "todo"){
+        //     this.tasks = [];
+        //     debugger;
+        //     for (var i = 0; i < this.props.amount; i++){
+        //         this.tasks.push(<Task handleClick={this.moveTask}/>);
+        //     }
+        // } else {
+        //     this.tasks = this.props.completed;
+        // }
+        // return(
+        //     <div className={`row ${this.props.taskType}`}>
+        //         <h4 className={this.props.taskType}>{this.props.text}</h4>
+        //         <ul className={`col-lg-12 col-xs-12 ${this.props.taskType}`}>
+        //             {this.tasks}
+        //         </ul>
+        //     </div>
+        this.pending = [];
+        if (this.props.taskType === "todo") {
+            for (var i = 0; i < this.props.amount; i++) {
+                this.pending.push(<Task handleClick={this.moveTask} />);
+                if(event.target.checked){
+                    event.target.parentElement.remove()
+                }
+            }
 
+        } else {
+            debugger;
+            this.pending = this.props.completed;
+        }
         return (
             <div className={`row ${this.props.taskType}`}>
-                {this.props.text}
+                <h4 className={this.props.taskType}>{this.props.text}</h4>
                 <ul className={`col-lg-12 col-xs-12 ${this.props.taskType}`}>
-                    {/* {this.props.taskType === "todo" ? tasks : this.props.newTaskList} */}
-                    {this.props.taskType === "todo" ? pending : completed}
+                    {this.pending}
                 </ul>
             </div>
         );
     }
+
 }
 
 class Task extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            task: ""
+            task: "",
+            isHidden: true,
+            status: "todo"////////////////
         }
         this.updateTask = this.updateTask.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.enableTextEdit = this.enableTextEdit.bind(this);
     }
     updateTask(event) {
-        // this.state.task = event.target.value
+        this.state.task = event.target.value;
         this.setState({
-            // task: this.state.task
-            task : event.target.value
+            task: this.state.task,
+            isHidden: false
         });
-        this.props.handleBlur(this.state.task);
     }
-    handleChange(event) {
-        this.props.moveTask(event);
-        
+    enableTextEdit(event) {
+        this.setState({
+            isHidden: true
+        });
+        event.target.className += " hidden";
     }
     render() {
         return (
-            <li class="checkbox task">
-                <label>
-                    <input type="checkbox" value={this.state.task} onChange={this.handleChange} />
-                    <input type="text" onBlur={this.updateTask} value={this.props.value} />
-                </label>
+            <li className="task">
+                <input type="checkbox" onClick={this.props.handleClick} value={this.state.task} />
+                <input type="text" className={this.state.isHidden ? `input` : `input hidden`} onBlur={this.updateTask} placeholder={this.props.val} />
+                <span className={this.state.isHidden ? `task hidden` : `task`} onClick={this.enableTextEdit}>{this.state.task}</span>
             </li>
         );
     }
