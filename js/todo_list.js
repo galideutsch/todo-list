@@ -93,17 +93,18 @@ class Task extends React.Component {
         });
         event.target.className += " hidden";
     }
-    getValue(event){
-        this.setState = ({
-            task: event.target.value
-        });
-    }
+    // getValue(event){
+    //     this.setState = ({
+    //         task: event.target.value
+    //     });
+    // }
     render() {
         return (
-            <li className="task" onLoad={this.getValue} value={this.props.val}>
+            <li className="task" value={this.props.val}>
                 <input type="checkbox" onClick={this.props.handleClick} value={this.state.task}/>
-                <input type="text" className={this.state.isHidden ?`input clickable`:`input clickable hidden`} onBlur={this.updateTask} />
-                <span className={this.state.isHidden ?`task clickable hidden`:`task clickable`} onClick={this.enableTextEdit}>{this.state.task}</span>
+                <input type="text" className={this.state.isHidden ?`input clickable`:`input clickable hidden`} onBlur={this.updateTask}  value={this.props.val}/>
+                <span className={this.state.isHidden ? `task clickable hidden`:`task clickable`
+                onClick={this.enableTextEdit}>{this.state.task}</span>
             </li>
         );
     }
