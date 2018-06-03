@@ -22,10 +22,15 @@ class App extends React.Component{
     render(){
         return(
             <div className="container">
-                <Header/>
+                <Header>
+                    <h1 className="col-lg-12 col-xs-12 title">You Got This.</h1>
+                    <h4 className="col-lg-12 col-xs-12 subtitle">Decluttering your life just became that easy</h4>
+                    <div className="col-lg-12 col-xs-12 btn">
+                        <button className="button clickable" onClick={this.addTask}>+</button>
+                    </div>
+                </Header>
                 <TaskList handleCheck={this.updateList} completed={this.state.completed} amount={this.state.count} taskType="todo" text="ToDo"/>
                 <TaskList completed={this.state.completed} taskType="done" text="Done"/>
-                <button onClick={this.addTask}>Add</button>
             </div>
         );
     }
@@ -100,8 +105,8 @@ class Task extends React.Component{
         return( 
             <li className="task">
                 <input type="checkbox" onClick={this.props.handleClick} value={this.state.task}/>
-                <input type="text" className={this.state.isHidden ?`input`:`input hidden`} onBlur={this.updateTask} placeholder={this.props.val}/>
-                <span className={this.state.isHidden ?`task hidden`:`task`} onClick={this.enableTextEdit}>{this.state.task}</span>
+                <input type="text" className={this.state.isHidden ?`input clickable`:`input clickable hidden`} onBlur={this.updateTask} placeholder={this.props.val}/>
+                <span className={this.state.isHidden ?`task clickable hidden`:`task clickable`} onClick={this.enableTextEdit}>{this.state.task}</span>
             </li>
         );
     }
@@ -111,8 +116,7 @@ class Header extends React.Component{
     render(){
         return(
             <div className="row header">
-                <h1 className="col-lg-12 col-xs-12 title">You Got This.</h1>
-                <h4 className="col-lg-12 col-xs-12 subtitle">Decluttering your life just became that easy</h4>
+                {this.props.children}
             </div>
         );
     }
