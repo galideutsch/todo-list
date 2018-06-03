@@ -19,7 +19,6 @@ class App extends React.Component {
         var content = event.target.value;
         if (event.target.checked && grandparent.className.includes("todo")){
             this.state.completed.push(<Task handleClick={this.moveTask} val={content} />);
-            event.target.parentElement.remove();
             this.setState({
                 completed: this.state.completed
             });
@@ -30,6 +29,12 @@ class App extends React.Component {
                 pending: this.state.pending
             });
         }
+    }
+    componentDidUpdate(prevProps, prevState){
+
+    }
+    componentWillUnmount(){
+
     }
     // deleteTask(){
 
@@ -112,7 +117,10 @@ class Header extends React.Component {
     }
 }
 
-ReactDOM.render(
-    <App />,
-    document.getElementById("root")
-);
+function render(){
+    ReactDOM.render(
+        <App />,
+        document.getElementById("root")
+    );
+}
+render();
