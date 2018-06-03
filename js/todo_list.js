@@ -9,7 +9,7 @@ class App extends React.Component {
         this.moveTask = this.moveTask.bind(this);
     }
     addTask() {
-        this.state.pending.push(<Task val="" handleClick={this.moveTask} />); 
+        this.state.pending.push(<Task val="" handleClick={this.moveTask} pending={this.state.pending}/>);
         this.setState({
             pending: this.state.pending
         });
@@ -17,13 +17,13 @@ class App extends React.Component {
     moveTask(event) {
         var grandparent = event.target.parentNode.parentNode;
         var content = event.target.value;
-        if (event.target.checked && grandparent.className.includes("todo")){
+        if (event.target.checked && grandparent.className.includes("todo")) {
             this.state.completed.push(<Task handleClick={this.moveTask} val={content} />);
             event.target.parentElement.remove();
             this.setState({
                 completed: this.state.completed
             });
-        } else if (event.target.checked && grandparent.className.includes("done")){
+        } else if (event.target.checked && grandparent.className.includes("done")) {
             this.state.pending.push(<Task handleClick={this.moveTask} val={content} />);
             event.target.parentElement.remove();
             this.setState({
@@ -44,8 +44,8 @@ class App extends React.Component {
                         <button className="button clickable" onClick={this.addTask}>+</button>
                     </div>
                 </Header>
-                <TaskList tasks={this.state.pending} taskType="todo" text="ToDo"/>
-                <TaskList tasks={this.state.completed} taskType="done" text="Done"/>
+                <TaskList tasks={this.state.pending} taskType="todo" text="ToDo" />
+                <TaskList tasks={this.state.completed} taskType="done" text="Done" />
             </div>
         );
     }
@@ -65,7 +65,6 @@ class TaskList extends React.Component {
             </div>
         );
     }
-
 }
 
 class Task extends React.Component {
@@ -73,10 +72,12 @@ class Task extends React.Component {
         super(props);
         this.state = {
             task: this.props.val,
-            isHidden: true
+            isHidden: true,
+            isStarred: true
         }
         this.updateTask = this.updateTask.bind(this);
         this.enableTextEdit = this.enableTextEdit.bind(this);
+        this.markStarred = this.markStarred.bind(this);
     }
     updateTask(event) {
         this.state.task = event.target.value;
@@ -91,12 +92,20 @@ class Task extends React.Component {
         });
         event.target.className += " hidden";
     }
+    markStarred(event) {
+        this.setState({
+            isStarred: !this.state.isStarred
+        });
+        this.state.isStarred ? event.target.src = "../images/goldstar-16.png" : event.target.src = "../images/star-16.png"
+        this.state.isStarred ? event.target.parentElement.parentElement.prepend(event.target.parentElement) : null;
+    }
     render() {
         return (
             <li className="task">
-                <input type="checkbox" onClick={this.props.handleClick} value={this.state.task}/>
-                <input type="text" className={this.state.isHidden ?`input clickable`:`input clickable hidden`} onBlur={this.updateTask} placeholder={this.state.task}/>
-                <span className={this.state.isHidden ?`task clickable hidden`:`task clickable`} onClick={this.enableTextEdit}>{this.state.task}</span>
+                <img className="unstarred" src="../images/star-16.png" className={this.state.isStarred ? `starred` : `unstarred`} onClick={this.markStarred}></img>
+                <input type="checkbox" onClick={this.props.handleClick} value={this.state.task} />
+                <input type="text" className={this.state.isHidden ? `input clickable` : `input clickable hidden`} onBlur={this.updateTask} placeholder={this.state.task} />
+                <span className={this.state.isHidden ? `task clickable hidden` : `task clickable`} onClick={this.enableTextEdit}>{this.state.task}</span>
             </li>
         );
     }

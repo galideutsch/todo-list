@@ -67,7 +67,8 @@ ul {
 }
 
 .col-xs-12.done {
-    background: rgb(228, 164, 182);;
+    background: rgb(228, 164, 182);
+    ;
 }
 
 ::placeholder {
@@ -75,6 +76,18 @@ ul {
     opacity: 1;
 }
 
-.btn:hover, .button:hover{
+.btn:hover, .button:hover {
     color: rgb(247, 166, 134);
+}
+
+.unstarred {
+    vertical-align: 0%;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.starred {
+    vertical-align: 0%;
+    margin-right: 5px;
+    cursor: pointer;
 }
