@@ -118,7 +118,7 @@ class Task extends React.Component {
             isStarred: !this.state.isStarred
         });
         this.state.isStarred ? event.target.src = "../images/star-16.png" : event.target.src = "../images/goldstar-16.png" ;
-        this.state.isStarred ? event.target.parentElement.parentElement.prepend(event.target.parentElement) : null;
+        this.state.isStarred ? null: event.target.parentElement.parentElement.prepend(event.target.parentElement);
     }
     render() {
         return (
