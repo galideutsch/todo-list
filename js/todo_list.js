@@ -19,6 +19,7 @@ class App extends React.Component {
         var content = event.target.value;
         if (event.target.checked && grandparent.className.includes("todo")) {
             this.state.completed.push(<Task handleClick={this.moveTask} val={content} />);
+            event.target.parentElement.remove();
             this.setState({
                 completed: this.state.completed
             });
@@ -30,12 +31,12 @@ class App extends React.Component {
             });
         }
     }
-    componentDidUpdate(prevProps, prevState){
+    // componentDidUpdate(prevProps, prevState){
 
-    }
-    componentWillUnmount(){
+    // }
+    // componentWillUnmount(){
 
-    }
+    // }
     // deleteTask(){
 
     // }
@@ -45,8 +46,8 @@ class App extends React.Component {
                 <Header>
                     <h1 className="col-lg-12 col-xs-12 title">You Got This.</h1>
                     <h4 className="col-lg-12 col-xs-12 subtitle">Decluttering your life just became that easy</h4>
-                    <div className="col-lg-12 col-xs-12 btn">
-                        <button className="button clickable" onClick={this.addTask}>+</button>
+                    <div className="col-lg-12 col-xs-12 button">
+                        <button className="btn clickable" onClick={this.addTask}>+</button>
                     </div>
                 </Header>
                 <TaskList tasks={this.state.pending} taskType="todo" text="ToDo" />
@@ -59,12 +60,22 @@ class App extends React.Component {
 class TaskList extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isShowing: true
+            
+        }
+        this.showList = this.showList.bind(this);
+    }
+    showList(){
+        this.setState({
+            isShowing: !this.state.isShowing
+        });
     }
     render() {
         return (
             <div className={`row ${this.props.taskType}`}>
-                <h4 className={this.props.taskType}>{this.props.text}</h4>
-                <ul className={`col-lg-12 col-xs-12 ${this.props.taskType}`}>
+                <h4 className={`${this.props.taskType} clickable`} onClick={this.showList}>{this.props.text}</h4>
+                <ul className={`col-lg-12 col-xs-12 ${this.props.taskType} ${this.state.isShowing? null : "hidden"}`}>
                     {this.props.tasks}
                 </ul>
             </div>
@@ -113,7 +124,7 @@ class Task extends React.Component {
         return (
             <li className="task">
                 <img src="../images/bluetrash.png" className="delete clickable" onClick={this.deleteTask} />
-                <img className="unstarred" src="../images/star-16.png" className={this.state.isStarred ? `starred` : `unstarred`} onClick={this.markStarred}></img>
+                <img src="../images/star-16.png" className={this.state.isStarred ? `starred` : `unstarred`} onClick={this.markStarred}></img>
                 <input type="checkbox" onClick={this.props.handleClick} value={this.state.task} />
                 <input type="text" className={this.state.isHidden ? `input clickable` : `input clickable hidden`} onBlur={this.updateTask} placeholder={this.state.task} />
                 <span className={this.state.isHidden ? `task clickable hidden` : `task clickable`} onClick={this.enableTextEdit}>{this.state.task}</span>

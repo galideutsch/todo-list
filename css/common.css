@@ -1,14 +1,17 @@
 .delete{
     right: 0;
     margin-top:0.5%;
-    width: 17px;
-    height: 17px;
+    width: 15px;
+    height: 15px;
     position: absolute;
 }
+
 body {
     background: #355C7D;
     background: linear-gradient(rgb(212, 152, 129), rgb(182, 84, 94), rgb(136, 74, 92), #6C5B7B, #355C7D);
+    background-repeat: no-repeat;
     color: white;
+    font-family: 'Raleway', sans-serif;
 }
 
 .clickable {
@@ -18,32 +21,43 @@ body {
 .header {
     text-align: center;
     padding: 5%;
-    padding-top: 10%;
+    height: 35%;
     background: #F8B195;
 }
 
-.todo {
+.row.todo{
+    -webkit-box-shadow: inset 0px 7px 10px 0px rgb(133, 5, 23);
+    -moz-box-shadow: inset 0px 7px 10px 0px rgb(133, 5, 23);
+    box-shadow: inset 0px 7px 10px 0px rgb(133, 5, 23);
     background: #F67280;
     padding: 0 5%;
 }
 
-.done {
+.row.done {
     background: #C06C84;
     padding: 0 5%;
+    -webkit-box-shadow: inset 0px 7px 10px 0px rgb(103, 22, 46);
+    -moz-box-shadow: inset 0px 7px 10px 0px rgb(103, 22, 46);
+    box-shadow: inset 0px 7px 10px 0px rgb(103, 22, 46);
 }
 
 .subtitle {
     font-family: 'Satisfy', cursive;
 }
 
-.button {
+.btn {
     border-radius: 50%;
     background: #355C7D;
     border: #355C7D;
+    font-size: 25px;
+    width: 45px;
+    -webkit-box-shadow: 2px 6px 6px -1.5px rgba(137, 60, 38, 0.75);
+    -moz-box-shadow: 2px 6px 6px -1.5px rgba(137, 60, 38, 0.75);
+    box-shadow: 2px 6px 6px -1.5px rgba(137, 60, 38, 0.75);
 }
 
-.btn {
-    margin-top: 10%;
+.button {
+    margin-top: 5%;
 }
 
 .row {
@@ -53,6 +67,8 @@ body {
 
 ul {
     list-style-type: none;
+    height: 25%;
+    overflow: scroll;
 }
 
 .input {
@@ -83,18 +99,16 @@ ul {
     opacity: 1;
 }
 
-.btn:hover, .button:hover {
+.btn:hover {
     color: rgb(247, 166, 134);
 }
 
-.unstarred {
-    vertical-align: 0%;
+.unstarred { 
     margin-right: 5px;
     cursor: pointer;
 }
 
 .starred {
-    vertical-align: 0%;
     margin-right: 5px;
     cursor: pointer;
 }
