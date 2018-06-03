@@ -9,22 +9,21 @@ class App extends React.Component {
         this.moveTask = this.moveTask.bind(this);
     }
     addTask() {
-        this.state.pending.push(<Task handleClick={this.moveTask} />); 
+        this.state.pending.push(<Task val="" handleClick={this.moveTask} />); 
         this.setState({
             pending: this.state.pending
         });
     }
     moveTask(event) {
         var grandparent = event.target.parentNode.parentNode;
+        var content = event.target.value;
         if (event.target.checked && grandparent.className.includes("todo")){
-            var content = event.target.value;
             this.state.completed.push(<Task handleClick={this.moveTask} val={content} />);
             event.target.parentElement.remove();
             this.setState({
                 completed: this.state.completed
             });
         } else if (event.target.checked && grandparent.className.includes("done")){
-            var content = event.target.placeholder;
             this.state.pending.push(<Task handleClick={this.moveTask} val={content} />);
             event.target.parentElement.remove();
             this.setState({
@@ -73,12 +72,11 @@ class Task extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            task: "",
+            task: this.props.val,
             isHidden: true
         }
         this.updateTask = this.updateTask.bind(this);
         this.enableTextEdit = this.enableTextEdit.bind(this);
-        this.getValue = this.getValue.bind(this);
     }
     updateTask(event) {
         this.state.task = event.target.value;
@@ -93,16 +91,11 @@ class Task extends React.Component {
         });
         event.target.className += " hidden";
     }
-    getValue(event){
-        this.setState = ({
-            task: event.target.value
-        });
-    }
     render() {
         return (
-            <li className="task" onLoad={this.getValue} value={this.props.val}>
+            <li className="task">
                 <input type="checkbox" onClick={this.props.handleClick} value={this.state.task}/>
-                <input type="text" className={this.state.isHidden ?`input clickable`:`input clickable hidden`} onBlur={this.updateTask} />
+                <input type="text" className={this.state.isHidden ?`input clickable`:`input clickable hidden`} onBlur={this.updateTask} placeholder={this.state.task}/>
                 <span className={this.state.isHidden ?`task clickable hidden`:`task clickable`} onClick={this.enableTextEdit}>{this.state.task}</span>
             </li>
         );
