@@ -1,3 +1,4 @@
+
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -80,14 +81,15 @@ class TaskList extends React.Component {
         for( var taskIndex in arr){
                 newArr.push(<Task status={status} handleBlur={this.props.handleBlur} moveTask={this.moveTask} value={arr[taskIndex]} />);
         }
-        return newArr;;
+        return newArr;
     }
     render() {
         var pending = this.convertTask(this.props.pending, "pending");
         var completed = this.convertTask(this.props.completed, "completed");
-        var tasks = [];
+        // var tasks = [];
         for (var i = 0; i < this.props.amount - completed.length; i++) {
             debugger;
+            console.log(i);
             // tasks.push(<Task handleBlur={this.props.handleBlur} moveTask={this.moveTask} />);
             // if(this.props.status == "pending"){}
             pending.push(<Task handleBlur={this.props.handleBlur} moveTask={this.moveTask} />);
