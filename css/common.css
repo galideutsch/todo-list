@@ -1,3 +1,9 @@
+.delete{
+    float: right;
+    margin-top:0.5%;
+    width: 17px;
+    height: 17px;
+}
 body {
     background: #355C7D;
     background: linear-gradient(rgb(212, 152, 129), rgb(182, 84, 94), rgb(136, 74, 92), #6C5B7B, #355C7D);
