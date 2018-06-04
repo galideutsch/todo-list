@@ -31,15 +31,6 @@ class App extends React.Component {
             });
         }
     }
-    // componentDidUpdate(prevProps, prevState){
-
-    // }
-    // componentWillUnmount(){
-
-    // }
-    // deleteTask(){
-
-    // }
     render() {
         return (
             <div className="container">
@@ -93,7 +84,7 @@ class Task extends React.Component {
         }
         this.updateTask = this.updateTask.bind(this);
         this.enableTextEdit = this.enableTextEdit.bind(this);
-        this.markStarred = this.markStarred.bind(this);
+        this.starTask = this.starTask.bind(this);
     }
     updateTask(event) {
         this.state.task = event.target.value;
@@ -113,7 +104,7 @@ class Task extends React.Component {
         event.target.parentElement.remove();
     }
 
-    markStarred(event) {
+   starTask(event) {
         this.setState({
             isStarred: !this.state.isStarred
         });
@@ -124,7 +115,7 @@ class Task extends React.Component {
         return (
             <li className="task">
                 <img src="../images/bluetrash.png" className="delete clickable" onClick={this.deleteTask} />
-                <img src="../images/star-16.png" className={this.state.isStarred ? `starred` : `unstarred`} onClick={this.markStarred}></img>
+                <img src="../images/star-16.png" className={this.state.isStarred ? `starred` : `unstarred`} onClick={this.starTask}></img>
                 <input type="checkbox" onClick={this.props.handleClick} value={this.state.task} />
                 <input type="text" className={this.state.isHidden ? `input clickable` : `input clickable hidden`} onBlur={this.updateTask} placeholder={this.state.task} />
                 <span className={this.state.isHidden ? `task clickable hidden` : `task clickable`} onClick={this.enableTextEdit}>{this.state.task}</span>
