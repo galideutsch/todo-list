@@ -18,12 +18,13 @@ class App extends React.Component {
         var grandparent = event.target.parentNode.parentNode;
         var content = event.target.value;
         if (event.target.checked && grandparent.className.includes("todo")) {
-            this.state.completed.push(<Task handleClick={this.moveTask} val={content} />);
+            var newPending = this.state.completed.slice(0) //makes a copy
+            newPending.push(<Task handleClick={this.moveTask} val={content} />);
             event.target.parentElement.remove();
             this.setState({
-                completed: this.state.completed
+                completed: newPending
             });
-        } else if (event.target.checked && grandparent.className.includes("done")) {
+        }  else if (event.target.checked && grandparent.className.includes("done")) {
             this.state.pending.push(<Task handleClick={this.moveTask} val={content} />);
             event.target.parentElement.remove();
             this.setState({
@@ -34,15 +35,24 @@ class App extends React.Component {
     render() {
         return (
             <div className="container">
-                <Header>
-                    <h1 className="col-lg-12 col-xs-12 title">You Got This.</h1>
-                    <h4 className="col-lg-12 col-xs-12 subtitle">Decluttering your life just became that easy</h4>
-                    <div className="col-lg-12 col-xs-12 button">
-                        <button className="btn clickable" onClick={this.addTask}>+</button>
+                <div className="row">
+                    <div className="col-xs-4 col-lg-4">
+                        <TaskList tasks={this.state.pending} taskType="todo" text="TODO"/>
                     </div>
-                </Header>
-                <TaskList tasks={this.state.pending} taskType="todo" text="ToDo" />
-                <TaskList tasks={this.state.completed} taskType="done" text="Done" />
+                    <div className="col-xs-4 col-lg-4">
+                        <Header>
+                            <h1 className="col-lg-12 col-xs-12 title">You Got This.</h1>
+                            <h4 className="col-lg-12 col-xs-12 subtitle">Decluttering your life just became that easy</h4>
+                            <div className="col-lg-12 col-xs-12 button">
+                                <br/>
+                                <button className="btn clickable" onClick={this.addTask}>+</button>
+                            </div>
+                        </Header>
+                    </div>
+                    <div className="col-xs-4 col-lg-4">
+                        <TaskList tasks={this.state.completed} taskType="done" text="DONE" />
+                    </div>
+                </div>
             </div>
         );
     }
@@ -66,7 +76,7 @@ class TaskList extends React.Component {
         return (
             <div className={`row ${this.props.taskType}`}>
                 <h4 className={`${this.props.taskType} clickable`} onClick={this.showList}>{this.props.text}</h4>
-                <ul className={`col-lg-12 col-xs-12 ${this.props.taskType} ${this.state.isShowing? null : "hidden"}`}>
+                <ul className={`col-lg-12 col-xs-12 ${this.props.taskType}${this.state.isShowing? "" : " hidden"}`}>
                     {this.props.tasks}
                 </ul>
             </div>
@@ -113,12 +123,12 @@ class Task extends React.Component {
     }
     render() {
         return (
-            <li className="task">
-                <img src="../images/bluetrash.png" className="delete clickable" onClick={this.deleteTask} />
+            <li className="task task-bar">
                 <img src="../images/star-16.png" className={this.state.isStarred ? `starred` : `unstarred`} onClick={this.starTask}></img>
                 <input type="checkbox" onClick={this.props.handleClick} value={this.state.task} />
                 <input type="text" className={this.state.isHidden ? `input clickable` : `input clickable hidden`} onBlur={this.updateTask} placeholder={this.state.task} />
                 <span className={this.state.isHidden ? `task clickable hidden` : `task clickable`} onClick={this.enableTextEdit}>{this.state.task}</span>
+                <img src="../images/bluetrash.png" className="delete clickable" onClick={this.deleteTask} />
             </li >
         );
     }

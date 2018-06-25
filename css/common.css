@@ -1,45 +1,70 @@
-.delete{
-    right: 0;
-    margin-top:0.5%;
-    width: 15px;
-    height: 15px;
-    position: absolute;
+@media only screen and (min-width: 1400px) {
+    .row.done{
+        margin-left: 30%;
+    }
+
+    .row.todo{
+        margin-left: 3%;
+    }
+
+    .header {
+        margin-top: 38%;
+        text-align: center;
+    }
+    ul.col-lg-12{
+        overflow-y: scroll;
+        height: 400px;
+    }
 }
 
 body {
-    background: #355C7D;
-    background: linear-gradient(rgb(212, 152, 129), rgb(182, 84, 94), rgb(136, 74, 92), #6C5B7B, #355C7D);
+    background: rgb(175, 230, 230);
+    background-image: url("../images/wallpaper.jpg");
+    background-size: cover;
     background-repeat: no-repeat;
+    background-position: left;
     color: white;
     font-family: 'Raleway', sans-serif;
+}
+
+.delete{
+    width: 15px;
+    height: 15px;
+}
+
+#root {
+    margin-top: 10%;
+}
+
+.row {
+    box-sizing: border-box;
+}
+
+.header, .row.todo, .row.done {
+    margin-bottom: 50px;
+}
+
+.task {
+    margin-left: 10%;
+}
+
+.row.todo {
+    padding: 0;
+}
+
+.row.done{
+    padding: 0;
 }
 
 .clickable {
     cursor: pointer;
 }
 
-.header {
-    text-align: center;
-    padding: 5%;
-    height: 35%;
-    background: #F8B195;
-}
-
 .row.todo{
-    -webkit-box-shadow: inset 0px 7px 10px 0px rgb(133, 5, 23);
-    -moz-box-shadow: inset 0px 7px 10px 0px rgb(133, 5, 23);
-    box-shadow: inset 0px 7px 10px 0px rgb(133, 5, 23);
-    background: #F67280;
-    padding: 0 5%;
     overflow: hidden;
 }
 
 .row.done {
-    background: #C06C84;
-    padding: 0 5%;
-    -webkit-box-shadow: inset 0px 7px 10px 0px rgb(103, 22, 46);
-    -moz-box-shadow: inset 0px 7px 10px 0px rgb(103, 22, 46);
-    box-shadow: inset 0px 7px 10px 0px rgb(103, 22, 46);
     overflow: hidden;
 }
 
@@ -49,32 +74,17 @@ body {
 
 .btn {
     border-radius: 50%;
-    background: #355C7D;
-    border: #355C7D;
     font-size: 25px;
-    width: 45px;
-    -webkit-box-shadow: 2px 6px 6px -1.5px rgba(137, 60, 38, 0.75);
-    -moz-box-shadow: 2px 6px 6px -1.5px rgba(137, 60, 38, 0.75);
-    box-shadow: 2px 6px 6px -1.5px rgba(137, 60, 38, 0.75);
+    width: 50px;
 }
 
-.button {
-    margin-top: 5%;
-}
-
-.row {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-ul {
+ul.col-lg-12{
     list-style-type: none;
-    height: 25%;
-    overflow-y: scroll;
-    box-sizing: content-box;
+    box-sizing: border-box;
+    padding: 0;
 }
 
-.input {
+input {
     background: none;
     border: none;
 }
@@ -84,26 +94,23 @@ ul {
 }
 
 .task, .input {
-    margin: 0 5px;
-    padding: 0 5px;
+    margin: 0 3px;
+    padding: 0 3px;
 }
 
-.col-xs-12.todo {
-    background: rgb(245, 194, 199);
-}
-
-.col-xs-12.done {
-    background: rgb(230, 186, 198);
-    ;
-}
-
-::placeholder {
+input::placeholder, input {
     color: white;
     opacity: 1;
 }
 
 .btn:hover {
-    color: rgb(247, 166, 134);
+    background: rgb(145, 226, 226);
+}
+
+.button:hover {
+    transform: scale3d(1.25, 1.25, 1.25);
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
 }
 
 .unstarred { 
@@ -114,5 +121,8 @@ ul {
 .starred {
     margin-right: 5px;
     cursor: pointer;
-    filter: saturate(5);
+}
+
+.button {
+    text-align: center;
 }
